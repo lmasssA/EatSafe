@@ -2,10 +2,11 @@ import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
 import { calculateGrade, generateSummary } from "@/utils/aiEngine";
 import { saveScan } from "@/utils/storage";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Image,
+  ImageBackground,
   Pressable,
   StyleSheet,
   Text,
@@ -95,10 +96,70 @@ setFat(
       : "#C62828";
 
   return (
+    <>
+  <Stack.Screen
+    options={{
+      headerShown: false,
+    }}
+  />
+  <ImageBackground
+    source={require("../assets/images/leaves-bg.png")}
+    resizeMode="cover"
+    style={{ flex: 1 }}
+    imageStyle={{ opacity: 15}}
+  >
     <View style={styles.container}>
-    
-      
+      <Text style={styles.resultsTitle}>
+  Results
+</Text>
+<View style={styles.heroCard}>
+      {imageUrl ? (
+        <Image
+          source={{ uri: imageUrl }}
+          style={styles.image}
+          resizeMode="cover"
+        />
+      ) : null}
 
+      <Text style={styles.title}>
+        {productName}
+      </Text>
+
+      <Text style={styles.subtitle}>
+        {brand}
+      </Text>
+</View>
+<View
+        style={[
+          styles.gradeCircle,
+          { borderColor: gradeColor },
+        ]}
+      >
+        <Text
+          style={[
+            styles.gradeLetter,
+            { color: gradeColor },
+          ]}
+        >
+          {grade}
+        </Text>
+
+        <Text
+          style={[
+            styles.gradeText,
+            { color: gradeColor },
+          ]}
+        >
+          {grade === "A"
+            ? "Excellent"
+            : grade === "B"
+            ? "Good"
+            : grade === "C"
+            ? "Moderate"
+            : "Poor"}
+        </Text>
+      </View>
+      
       <View
   style={{
     flexDirection: "row",
@@ -183,52 +244,6 @@ setFat(
   </View>
 )}
 </View>
-
-      {imageUrl ? (
-        <Image
-          source={{ uri: imageUrl }}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      ) : null}
-
-      <Text style={styles.title}>
-        {productName}
-      </Text>
-
-      <Text style={styles.subtitle}>
-        {brand}
-      </Text>
-<View
-        style={[
-          styles.gradeCircle,
-          { borderColor: gradeColor },
-        ]}
-      >
-        <Text
-          style={[
-            styles.gradeLetter,
-            { color: gradeColor },
-          ]}
-        >
-          {grade}
-        </Text>
-
-        <Text
-          style={[
-            styles.gradeText,
-            { color: gradeColor },
-          ]}
-        >
-          {grade === "A"
-            ? "Excellent"
-            : grade === "B"
-            ? "Good"
-            : grade === "C"
-            ? "Moderate"
-            : "Poor"}
-        </Text>
-      </View>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>
           AI Summary
@@ -271,22 +286,35 @@ setFat(
         </Pressable>
       </View>
     </View>
+  </ImageBackground>
+</>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Colors.warmWhite,
-    padding: 24,
-    justifyContent: "center",
+  flex: 1,
+  backgroundColor: "transparent",
+  padding: 24,
+  paddingTop: 80,
+},
+heroCard: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+resultsTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: Colors.forest,
+    alignSelf: "flex-start",
+    marginBottom: 24,
   },
 
   gradeCircle: {
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    borderWidth: 5,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    borderWidth: 3,
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -294,22 +322,23 @@ const styles = StyleSheet.create({
   },
 
   gradeLetter: {
-    fontSize: 72,
+    fontSize: 56,
     fontWeight: "bold",
   },
 
   gradeText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "600",
   },
 
   image: {
-    width: 160,
-    height: 160,
-    alignSelf: "center",
-    borderRadius: 16,
-    marginBottom: 20,
-  },
+  width: 140,
+  height: 140,
+  alignSelf: "center",
+  borderRadius: 16,
+  marginBottom: 16,
+  backgroundColor: "white",
+},
 
   title: {
     fontSize: 28,
@@ -325,11 +354,22 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 
+
   card: {
-    backgroundColor: "white",
-    borderRadius: 16,
-    padding: 20,
+  backgroundColor: "white",
+  borderRadius: 24,
+  padding: 24,
+
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 6,
   },
+  shadowOpacity: 0.08,
+  shadowRadius: 10,
+
+  elevation: 4,
+},
 
   cardTitle: {
     fontWeight: "700",
