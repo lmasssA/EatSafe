@@ -1,8 +1,15 @@
+import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
-import { useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 export default function IngredientsScreen() {
   const { barcode } = useLocalSearchParams();
 console.log("INGREDIENT BARCODE:", barcode);
@@ -31,53 +38,91 @@ useEffect(() => {
   loadIngredients();
 }, [barcode]);
 return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Ingredients
-      </Text>
+  <>
+    <Stack.Screen
+      options={{
+        headerShown: false,
+      }}
+    />
 
-      {ingredients.length > 0 ? (
-  ingredients.map((ingredient, index) => (
-    <Text
-      key={index}
-      style={styles.ingredient}
-    >
-      • {ingredient.trim()}
-    </Text>
-  ))
-) : (
-  <Text style={styles.ingredient}>
-    Ingredients information is not available for this product.
+    <AppBackground>
+      <View style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
+          <TouchableOpacity
+  style={styles.backButton}
+  onPress={() => router.back()}
+>
+  <Text style={styles.backText}>
+    ← Results
   </Text>
-)}
-    </View>
-  );
+</TouchableOpacity>
+
+          <Text style={styles.pageTitle}>
+            Ingredients
+          </Text>
+
+          <View style={styles.card}>
+            {ingredients.length > 0 ? (
+              ingredients.map((ingredient, index) => (
+                <Text
+                  key={index}
+                  style={styles.ingredient}
+                >
+                  • {ingredient.trim()}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.ingredient}>
+                Ingredients information is not available for this product.
+              </Text>
+            )}
+          </View>
+        </ScrollView>
+      </View>
+    </AppBackground>
+  </>
+);
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.warmWhite,
-    padding: 24,
-  },
+container: {
+  flex: 1,
+  padding: 24,
+},
+backButton: {
+  position: "absolute",
+  top: 40,
+  left: 8,
+  zIndex: 10,
+},
 
-  title: {
-    fontSize: 32,
-    fontWeight: "700",
-    color: Colors.forest,
-    marginTop: 40,
-    marginBottom: 24,
-  },
+backText: {
+  fontSize: 17,
+  fontWeight: "600",
+  color: Colors.forest,
+},
+
+pageTitle: {
+  alignSelf: "center",
+  marginTop: 110,
+  fontSize: 32,
+  fontWeight: "700",
+  color: Colors.forest,
+},
 
   card: {
-    backgroundColor: "white",
-    borderRadius: 16,
-    padding: 20,
-  },
+  backgroundColor: "rgba(255,255,255,0.88)",
+  borderRadius: 28,
+  padding: 24,
+  marginTop: 20,
+  marginBottom: 40,
+},
 
-  ingredient: {
-    fontSize: 18,
-    marginBottom: 16,
-    color: Colors.ink2,
-  },
+ingredient: {
+  fontSize: 15,
+  lineHeight: 24,
+  marginBottom: 14,
+  color: Colors.ink2,
+},
 });

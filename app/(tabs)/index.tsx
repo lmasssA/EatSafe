@@ -1,3 +1,4 @@
+import AppBackground from "@/components/AppBackground";
 import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -6,11 +7,12 @@ import Colors from "@/constants/colors";
 
 export default function HomeScreen() {
   return (
+    <AppBackground>
     <View style={styles.container}>
 
       <Text style={styles.logo}>🍃</Text>
 
-      <Text style={styles.title}>EatSafe</Text>
+      <Text style={styles.title}>EatSafe ✦</Text>
 
       <Text style={styles.subtitle}>
         Your AI Food Safety Companion
@@ -54,16 +56,16 @@ export default function HomeScreen() {
       </View>
 
     </View>
+     </AppBackground>
   );
 }
 
 const styles = StyleSheet.create({
 
   container: {
-    flex: 1,
-    backgroundColor: Colors.warmWhite,
-    padding: 24,
-  },
+  flex: 1,
+  padding: 24,
+},
 
   logo: {
     fontSize: 70,
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255,255,255,0.88)",
     borderRadius: 18,
     padding: 20,
     marginTop: 35,
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
   },
 
   tip: {
-    backgroundColor: Colors.sageMist,
+    backgroundColor: "rgba(255,255,255,0.88)",
     borderRadius: 18,
     padding: 20,
     marginTop: 25,
