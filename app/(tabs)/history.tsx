@@ -1,6 +1,8 @@
 import Colors from "@/constants/colors";
 import { getScanHistory, clearHistory } from "@/utils/storage";
+import AppBackground from "@/components/AppBackground";
 import { useFocusEffect } from "expo-router";
+import { router } from "expo-router";
 import { useCallback, useState } from "react";
 import {
   FlatList,
@@ -30,6 +32,7 @@ export default function HistoryScreen() {
   }
 
   return (
+     <AppBackground>
     <View style={styles.container}>
       <Text style={styles.title}>
         Recent Scans
@@ -45,34 +48,46 @@ export default function HistoryScreen() {
       </Pressable>
 
       <FlatList
-        data={history}
-        keyExtractor={(item, index) =>
-          `${item.barcode}-${index}`
-        }
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.product}>
-              {item.name}
-            </Text>
+  data={history}
+  keyExtractor={(item, index) =>
+    `${item.barcode}-${index}`
+  }
+  renderItem={({ item }) => (
+    <Pressable
+      style={styles.card}
+      onPress={() =>
+        router.push({
+          pathname: "/history-details",
+          params: {
+            scan: JSON.stringify(item),
+          },
+        })
+      }
+    >
+      <Text style={styles.product}>
+        {item.name}
+      </Text>
 
-            <Text style={styles.brand}>
-              {item.brand}
-            </Text>
+      <Text style={styles.brand}>
+        {item.brand}
+      </Text>
 
-            <Text style={styles.grade}>
-              Grade {item.grade}
-            </Text>
-          </View>
-        )}
-      />
+      <Text style={styles.grade}>
+        Grade {item.grade}
+      </Text>
+    </Pressable>
+  )}
+/>
+     
     </View>
+    </AppBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.warmWhite,
+   backgroundColor: "transparent",
     padding: 20,
   },
 
@@ -98,9 +113,9 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255,255,255,0.82)",
     padding: 16,
-    borderRadius: 16,
+    borderRadius: 32,
     marginBottom: 12,
   },
 

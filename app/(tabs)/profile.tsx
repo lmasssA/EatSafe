@@ -1,6 +1,7 @@
 import Colors from "@/constants/colors";
 import { StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
+import AppBackground from "@/components/AppBackground";
 import { getScanHistory } from "@/utils/storage";
 
 export default function ProfileScreen() {
@@ -37,6 +38,7 @@ useEffect(() => {
   loadStats();
 }, []);
   return (
+    <AppBackground>
     <View style={styles.container}>
       <Text style={styles.title}>
         My Profile
@@ -100,13 +102,14 @@ useEffect(() => {
         </Text>
       </View>
     </View>
+    </AppBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.warmWhite,
+    backgroundColor: "transparent",
     padding: 24,
   },
 
@@ -119,8 +122,8 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "white",
-    borderRadius: 16,
+    backgroundColor: "rgba(255,255,255,0.82)",
+    borderRadius: 32,
     padding: 20,
     marginBottom: 16,
   },

@@ -60,6 +60,26 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+  name="result"
+  options={{
+    href: null,
+  }}
+/>
+
+<Tabs.Screen
+  name="ingredients"
+  options={{
+    href: null,
+  }}
+/>
+
+<Tabs.Screen
+  name="nutrition"
+  options={{
+    href: null,
+  }}
+/>
     </Tabs>
   );
 }

@@ -37,6 +37,27 @@ useEffect(() => {
 
   loadIngredients();
 }, [barcode]);
+function getIngredientStatus(name: string) {
+  const ingredient = name.toLowerCase();
+
+  if (
+    ingredient.includes("palm oil") ||
+    ingredient.includes("corn syrup") ||
+    ingredient.includes("artificial") ||
+    ingredient.includes("colour") ||
+    ingredient.includes("color")
+  ) {
+    return {
+      icon: "⚠️",
+      title: "Use in moderation",
+    };
+  }
+
+  return {
+    icon: "✅",
+    title: "Generally safe",
+  };
+}
 return (
   <>
     <Stack.Screen
@@ -52,7 +73,14 @@ return (
         >
           <TouchableOpacity
   style={styles.backButton}
-  onPress={() => router.back()}
+  onPress={() =>
+  router.navigate({
+    pathname: "/result",
+    params: {
+      barcode: String(barcode),
+    },
+  })
+}
 >
   <Text style={styles.backText}>
     ← Results
@@ -65,15 +93,26 @@ return (
 
           <View style={styles.card}>
             {ingredients.length > 0 ? (
-              ingredients.map((ingredient, index) => (
-                <Text
-                  key={index}
-                  style={styles.ingredient}
-                >
-                  • {ingredient.trim()}
-                </Text>
-              ))
-            ) : (
+  ingredients.map((ingredient, index) => {
+    const status =
+      getIngredientStatus(ingredient);
+
+    return (
+      <View
+        key={index}
+        style={styles.ingredientCard}
+      >
+        <Text style={styles.ingredientName}>
+          {status.icon} {ingredient.trim()}
+        </Text>
+
+        <Text style={styles.ingredientInfo}>
+          {status.title}
+        </Text>
+      </View>
+    );
+  })
+) : (
               <Text style={styles.ingredient}>
                 Ingredients information is not available for this product.
               </Text>
@@ -105,7 +144,7 @@ backText: {
 
 pageTitle: {
   alignSelf: "center",
-  marginTop: 110,
+  marginTop: 90,
   fontSize: 32,
   fontWeight: "700",
   color: Colors.forest,
@@ -123,6 +162,26 @@ ingredient: {
   fontSize: 15,
   lineHeight: 24,
   marginBottom: 14,
+  color: Colors.ink2,
+},
+
+ingredientCard: {
+  backgroundColor: "rgba(255,255,255,0.65)",
+  borderRadius: 20,
+  padding: 16,
+  marginBottom: 12,
+},
+
+ingredientName: {
+  fontSize: 17,
+  fontWeight: "700",
+  color: Colors.forest,
+},
+
+ingredientInfo: {
+  marginTop: 6,
+  fontSize: 14,
+  lineHeight: 20,
   color: Colors.ink2,
 },
 });

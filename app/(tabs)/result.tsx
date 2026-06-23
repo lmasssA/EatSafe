@@ -9,8 +9,10 @@ import {
   Image,
   Pressable,
   StyleSheet,
+  ScrollView,
   Text,
-  View
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function ResultScreen() {
@@ -64,22 +66,40 @@ setFat(
           generateSummary(calculatedGrade)
         );
 
-        await saveScan({
-          name:
-            data.product.product_name ||
-            data.product.product_name_en ||
-            "Unknown Product",
+       await saveScan({
+  name:
+    data.product.product_name ||
+    data.product.product_name_en ||
+    "Unknown Product",
 
-          brand:
-            data.product.brands || "",
+  brand:
+    data.product.brands || "",
 
-          grade: calculatedGrade,
+  grade: calculatedGrade,
 
-          barcode: String(barcode),
+  barcode: String(barcode),
 
-          scannedAt:
-            new Date().toISOString(),
-        });
+  sugar:
+    data.product.nutriments?.sugars_100g ?? "N/A",
+
+  fat:
+    data.product.nutriments?.fat_100g ?? "N/A",
+
+  protein:
+    data.product.nutriments?.proteins_100g ?? "N/A",
+
+  salt:
+    data.product.nutriments?.salt_100g ?? "N/A",
+
+  ingredients:
+    data.product.ingredients_text ?? "Not available",
+
+  imageUrl:
+    data.product.image_front_url ?? "",
+
+  scannedAt:
+    new Date().toISOString(),
+});
       }
     }
 
@@ -103,8 +123,25 @@ setFat(
       headerShown: false,
     }}
   />
-    <View style={styles.container}>
-      <Text style={styles.resultsTitle}>
+    <ScrollView
+  style={styles.container}
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={{
+    paddingBottom: 120,
+  }}
+>
+     <View style={styles.topBar}>
+  <TouchableOpacity
+  onPress={() => router.navigate("/scan")}
+>
+  <Text style={styles.navText}>
+    ← Scan
+  </Text>
+</TouchableOpacity>
+
+</View>
+
+<Text style={styles.resultsTitle}>
   Results
 </Text>
 <View style={styles.heroCard}>
@@ -280,7 +317,7 @@ setFat(
           </Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
 </>
 </AppBackground>
   );
@@ -295,7 +332,7 @@ const styles = StyleSheet.create({
 },
 heroCard: {
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: 3,
   },
 resultsTitle: {
     fontSize: 22,
@@ -306,15 +343,16 @@ resultsTitle: {
   },
 
   gradeCircle: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    borderWidth: 3,
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 24,
-  },
+  width: 140,
+  height: 140,
+  borderRadius: 70,
+  borderWidth: 3,
+  alignSelf: "center",
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: -10,
+  marginBottom: 20,
+},
 
   gradeLetter: {
     fontSize: 56,
@@ -348,7 +386,18 @@ resultsTitle: {
     color: Colors.ink2,
     marginBottom: 30,
   },
+topBar: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+},
 
+navText: {
+  fontSize: 17,
+  fontWeight: "600",
+  color: Colors.forest,
+},
 
 card: {
   backgroundColor: "rgba(255,255,255,0.82)",

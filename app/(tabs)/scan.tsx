@@ -23,12 +23,12 @@ export default function ScanScreen() {
   console.log("Barcode:", result.data);
 
   setTimeout(() => {
-    router.replace({
-      pathname: "/result",
-      params: {
-        barcode: result.data,
-      },
-    });
+    router.push({
+  pathname: "/result",
+  params: {
+    barcode: result.data,
+  },
+});
   }, 1000);
 }
   if (!permission) {
