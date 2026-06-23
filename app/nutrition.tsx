@@ -1,8 +1,9 @@
+import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
-import { useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function NutritionScreen() {
   const { barcode } = useLocalSearchParams();
@@ -31,62 +32,102 @@ useEffect(() => {
   loadNutrition();
 }, [barcode]);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Nutrition Facts</Text>
+  <AppBackground>
+    <>
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+      />
 
-      <View style={styles.card}>
-        <Text style={styles.item}>
-          Barcode: {barcode}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.back()}
+      >
+        <Text style={styles.backText}>
+          ← Results
         </Text>
+      </TouchableOpacity>
 
-        <Text style={styles.item}>
-          Energy: {energy} kcal
-        </Text>
+      <View style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
+          <Text style={styles.pageTitle}>
+            Nutrition
+          </Text>
 
-        <Text style={styles.item}>
-          Sugar: {sugar} g
-        </Text>
+          <View style={styles.card}>
+            <Text style={styles.item}>
+              Barcode: {barcode}
+            </Text>
 
-        <Text style={styles.item}>
-          Fat: {fat} g
-        </Text>
+            <Text style={styles.item}>
+              Energy: {energy} kcal
+            </Text>
 
-        <Text style={styles.item}>
-          Protein: {protein} g
-        </Text>
+            <Text style={styles.item}>
+              Sugar: {sugar} g
+            </Text>
 
-        <Text style={styles.item}>
-          Salt: {salt} g
-        </Text>
+            <Text style={styles.item}>
+              Fat: {fat} g
+            </Text>
+
+            <Text style={styles.item}>
+              Protein: {protein} g
+            </Text>
+
+            <Text style={styles.item}>
+              Salt: {salt} g
+            </Text>
+          </View>
+        </ScrollView>
       </View>
-    </View>
-  );
+    </>
+  </AppBackground>
+);
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.warmWhite,
     padding: 24,
   },
 
-  title: {
-    fontSize: 32,
+  backButton: {
+    position: "absolute",
+    top: 40,
+    left: 8,
+    zIndex: 10,
+  },
+
+  backText: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: Colors.forest,
+  },
+
+  pageTitle: {
+    fontSize: 34,
     fontWeight: "700",
     color: Colors.forest,
-    marginTop: 40,
-    marginBottom: 24,
+    textAlign: "center",
+    marginTop: 90,
+    marginBottom: 30,
   },
 
   card: {
-    backgroundColor: "white",
-    borderRadius: 16,
-    padding: 20,
+    backgroundColor: "rgba(255,255,255,0.82)",
+    borderRadius: 32,
+    padding: 24,
+    marginBottom: 40,
   },
 
   item: {
-    fontSize: 18,
-    marginBottom: 16,
+    fontSize: 16,
+    lineHeight: 30,
+    marginBottom: 10,
     color: Colors.ink2,
   },
 });
