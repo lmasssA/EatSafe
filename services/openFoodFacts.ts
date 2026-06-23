@@ -6,8 +6,9 @@ export async function getProductByBarcode(barcode: string) {
       `https://world.openfoodfacts.org/api/v2/product/${barcode}.json`,
       {
         headers: {
-          "User-Agent": "EatSafe/1.0",
-        },
+  "User-Agent":
+    "EatSafe - Educational Project - Contact: eatsafe.app@gmail.com",
+},
       }
     );
 

@@ -1,3 +1,4 @@
+import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
 import { calculateGrade, generateSummary } from "@/utils/aiEngine";
@@ -6,11 +7,10 @@ import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Image,
-  ImageBackground,
   Pressable,
   StyleSheet,
   Text,
-  View,
+  View
 } from "react-native";
 
 export default function ResultScreen() {
@@ -96,18 +96,13 @@ setFat(
       : "#C62828";
 
   return (
+    <AppBackground>
     <>
   <Stack.Screen
     options={{
       headerShown: false,
     }}
   />
-  <ImageBackground
-    source={require("../assets/images/leaves-bg.png")}
-    resizeMode="cover"
-    style={{ flex: 1 }}
-    imageStyle={{ opacity: 15}}
-  >
     <View style={styles.container}>
       <Text style={styles.resultsTitle}>
   Results
@@ -286,8 +281,8 @@ setFat(
         </Pressable>
       </View>
     </View>
-  </ImageBackground>
 </>
+</AppBackground>
   );
 }
 
@@ -300,7 +295,7 @@ const styles = StyleSheet.create({
 },
 heroCard: {
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 24,
   },
 resultsTitle: {
     fontSize: 22,
@@ -355,9 +350,9 @@ resultsTitle: {
   },
 
 
-  card: {
-  backgroundColor: "white",
-  borderRadius: 24,
+card: {
+  backgroundColor: "rgba(255,255,255,0.82)",
+  borderRadius: 32,
   padding: 24,
 
   shadowColor: "#000",
