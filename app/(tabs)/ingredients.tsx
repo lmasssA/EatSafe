@@ -1,7 +1,7 @@
 import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ScrollView,
@@ -43,9 +43,11 @@ export default function IngredientsScreen() {
 
     if (
       ingredient.includes("sugar") ||
-      ingredient.includes("glucose") ||
-      ingredient.includes("fructose") ||
-      ingredient.includes("corn syrup")
+ingredient.includes("sucre") ||
+ingredient.includes("glucose") ||
+ingredient.includes("fructose") ||
+ingredient.includes("corn syrup") ||
+ingredient.includes("cane sugar")
     ) {
       return {
         icon: "🔴",
@@ -120,6 +122,10 @@ export default function IngredientsScreen() {
                   <Text style={styles.ingredientInfo}>
                     {status.title}
                   </Text>
+                 
+                  <Text style={styles.ingredientDescription}>
+  {status.description}
+</Text>
                 </View>
               );
             })
@@ -195,4 +201,10 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: Colors.ink2,
   },
+  ingredientDescription: {
+  marginTop: 6,
+  fontSize: 14,
+  lineHeight: 22,
+  color: Colors.ink2,
+},
 });

@@ -1,8 +1,7 @@
-import Colors from "@/constants/colors";
-import { getScanHistory, clearHistory } from "@/utils/storage";
 import AppBackground from "@/components/AppBackground";
-import { useFocusEffect } from "expo-router";
-import { router } from "expo-router";
+import Colors from "@/constants/colors";
+import { clearHistory, getScanHistory } from "@/utils/storage";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import {
   FlatList,
@@ -14,6 +13,31 @@ import {
 
 export default function HistoryScreen() {
   const [history, setHistory] = useState<any[]>([]);
+
+  function getTimeAgo(dateString: string) {
+  const now = new Date();
+  const scanned = new Date(dateString);
+
+  const diff =
+    now.getTime() - scanned.getTime();
+
+  const minutes = Math.floor(diff / 60000);
+
+  if (minutes < 1) return "Just now";
+  if (minutes < 60) return `${minutes} min ago`;
+
+  const hours = Math.floor(minutes / 60);
+
+  if (hours < 24) return `${hours} hr ago`;
+
+  const days = Math.floor(hours / 24);
+
+  if (days === 1) return "Yesterday";
+
+  if (days < 7) return `${days} days ago`;
+
+  return scanned.toLocaleDateString("en-IN");
+}
 
   async function loadHistory() {
     const data = await getScanHistory();
@@ -64,9 +88,15 @@ export default function HistoryScreen() {
         })
       }
     >
-      <Text style={styles.product}>
-        {item.name}
-      </Text>
+      <View style={styles.topRow}>
+  <Text style={styles.product}>
+    {item.name}
+  </Text>
+
+  <Text style={styles.timeAgo}>
+    {getTimeAgo(item.scannedAt)}
+  </Text>
+</View>
 
       <Text style={styles.brand}>
         {item.brand}
@@ -118,6 +148,18 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     marginBottom: 12,
   },
+
+topRow: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+},
+
+timeAgo: {
+  fontSize: 13,
+  color: "#777",
+  fontWeight: "500",
+},
 
   product: {
     fontSize: 18,

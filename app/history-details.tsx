@@ -1,7 +1,14 @@
 import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function HistoryDetailsScreen() {
   const { scan } = useLocalSearchParams();
@@ -18,61 +25,173 @@ export default function HistoryDetailsScreen() {
     );
   }
   return (
-    <AppBackground>
-        <Stack.Screen
-  options={{
-    headerShown: false,
-  }}
-/>
-      <View style={styles.container}>
-        <Pressable
-          onPress={() => router.back()}
-        >
-          <Text style={styles.backButton}>
-            ← History
-          </Text>
-        </Pressable>
+  <AppBackground>
+    <Stack.Screen
+      options={{
+        headerShown: false,
+      }}
+    />
 
-        <Text style={styles.title}>
-          {data.name}
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 40 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <Pressable onPress={() => router.back()}>
+        <Text style={styles.backButton}>
+          ← History
+        </Text>
+      </Pressable>
+
+      {data.imageUrl ? (
+        <Image
+          source={{ uri: data.imageUrl }}
+          style={styles.productImage}
+        />
+      ) : null}
+
+      <Text style={styles.title}>
+        {data.name}
+      </Text>
+
+      <View style={styles.card}>
+        
+        <Text style={styles.sectionTitle}>
+  📦 Product Information
+</Text>
+
+
+        <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    🏷️ Brand
+  </Text>
+
+  <Text style={styles.infoValue}>
+    {data.brand}
+  </Text>
+</View>
+
+
+       <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    ⭐ Health Grade
+  </Text>
+
+  <Text
+    style={[
+      styles.infoValue,
+      {
+        color:
+          data.grade === "A"
+            ? "#2E7D32"
+            : data.grade === "B"
+            ? "#43A047"
+            : data.grade === "C"
+            ? "#F9A825"
+            : data.grade === "D"
+            ? "#EF6C00"
+            : "#C62828",
+      },
+    ]}
+  >
+    {data.grade}
+  </Text>
+</View>
+
+       <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    📅 Scan Date
+  </Text>
+
+  <Text style={styles.infoValue}>
+    {data.scannedAt
+      ? new Date(data.scannedAt).toLocaleDateString("en-IN") +
+        " • " +
+        new Date(data.scannedAt).toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : "N/A"}
+  </Text>
+</View>
+
+<Text style={styles.sectionTitle}>
+  🥗 Nutrition
+</Text>
+
+        <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    🔥 Calories
+  </Text>
+
+  <Text style={styles.infoValue}>
+    {data.calories ?? "N/A"} kcal
+  </Text>
+</View>
+
+        <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    🍬 Sugar
+  </Text>
+
+  <Text style={styles.infoValue}>
+    {data.sugar ?? "N/A"} g
+  </Text>
+</View>
+
+        <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    🧈 Fat
+  </Text>
+
+  <Text style={styles.infoValue}>
+    {data.fat ?? "N/A"} g
+  </Text>
+</View>
+
+        <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    💪 Protein
+  </Text>
+
+  <Text style={styles.infoValue}>
+    {data.protein ?? "N/A"} g
+  </Text>
+</View>
+
+        <View style={styles.infoRow}>
+  <Text style={styles.infoLabel}>
+    🧂 Salt
+  </Text>
+
+  <Text style={styles.infoValue}>
+    {data.salt ?? "N/A"} g
+  </Text>
+</View>
+
+        <Text style={styles.ingredientsTitle}>
+          Ingredients
         </Text>
 
-        <View style={styles.card}>
-          <Text style={styles.item}>
-            Brand: {data.brand}
-          </Text>
-
-          <Text style={styles.item}>
-            Grade: {data.grade}
-          </Text>
-
-          <Text style={styles.item}>
-            Sugar: {data.sugar ?? "N/A"} g
-          </Text>
-
-          <Text style={styles.item}>
-            Fat: {data.fat ?? "N/A"} g
-          </Text>
-
-          <Text style={styles.item}>
-            Protein: {data.protein ?? "N/A"} g
-          </Text>
-
-          <Text style={styles.item}>
-            Salt: {data.salt ?? "N/A"} g
-          </Text>
-
-          <Text style={styles.item}>
-            Ingredients:
-          </Text>
-
-          <Text style={styles.ingredients}>
-            {data.ingredients ?? "Not available"}
-          </Text>
+        <View style={styles.ingredientsContainer}>
+          {(data.ingredients ?? "")
+            .split(",")
+            .map((ingredient: string, index: number) => (
+              <Text
+                key={index}
+                style={styles.ingredientItem}
+              >
+                •{" "}
+                {ingredient
+                  .replace(/_/g, "")
+                  .trim()}
+              </Text>
+            ))}
         </View>
       </View>
-    </AppBackground>
-  );
+    </ScrollView>
+  </AppBackground>
+);
 }
 
 const styles = StyleSheet.create({
@@ -87,6 +206,15 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: Colors.forest,
   },
+
+  productImage: {
+  width: 140,
+  height: 140,
+  borderRadius: 20,
+  alignSelf: "center",
+  marginTop: 20,
+  marginBottom: 20,
+},
 
   title: {
   fontSize: 30,
@@ -104,14 +232,57 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    fontSize: 18,
-    marginBottom: 12,
-    color: Colors.ink2,
-  },
+  fontSize: 18,
+  color: Colors.ink2,
+  marginBottom: 14,
+},
 
-  ingredients: {
-    marginTop: 8,
-    lineHeight: 24,
-    color: Colors.ink2,
-  },
+ingredientsTitle: {
+  fontSize: 22,
+  fontWeight: "700",
+  color: Colors.forest,
+  marginTop: 18,
+  marginBottom: 14,
+},
+
+ingredientsContainer: {
+  marginBottom: 20,
+},
+
+ingredientItem: {
+  fontSize: 18,
+  fontWeight: "600",
+  color: Colors.ink2,
+  lineHeight: 30,
+  marginBottom: 10,
+},
+
+sectionTitle: {
+  fontSize: 22,
+  fontWeight: "700",
+  color: Colors.forest,
+  marginTop: 20,
+  marginBottom: 12,
+},
+
+infoRow: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  paddingVertical: 10,
+  borderBottomWidth: 0.5,
+  borderBottomColor: "#E5E7EB",
+},
+
+infoLabel: {
+  fontSize: 18,
+  fontWeight: "600",
+  color: Colors.ink2,
+},
+
+infoValue: {
+  fontSize: 18,
+  fontWeight: "700",
+  color: Colors.forest,
+},
 });

@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import {
   Image,
   Pressable,
-  StyleSheet,
   ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -78,6 +78,9 @@ setFat(
   grade: calculatedGrade,
 
   barcode: String(barcode),
+
+  calories:
+  data.product.nutriments?.["energy-kcal_100g"] ?? "N/A",
 
   sugar:
     data.product.nutriments?.sugars_100g ?? "N/A",
