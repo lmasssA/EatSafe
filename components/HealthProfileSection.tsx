@@ -1,10 +1,8 @@
-import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import {
   getHealthProfile,
   saveHealthProfile,
 } from "@/utils/healthStorage";
-import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Pressable,
@@ -73,24 +71,19 @@ useEffect(() => {
 ]);
   
   return (
-    <AppBackground>
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-      />
-
       <ScrollView
         style={styles.container}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>
-          🌿 Your Health Profile
-        </Text>
+
 <View style={styles.infoCard}>
-        <Text style={styles.subtitle}>
-          Select your health conditions to receive personalized nutrition insights and smarter food recommendations.
-        </Text>
+  <Text style={styles.infoTitle}>
+    🍃 Personalized Nutrition
+  </Text>
+
+  <Text style={styles.subtitle}>
+    Your AI recommendations are personalized based on your health conditions, dietary preferences, and goals.
+  </Text>
 </View>
 
         <Text style={styles.sectionTitle}>
@@ -220,7 +213,6 @@ useEffect(() => {
 </View>
 
       </ScrollView>
-    </AppBackground>
   );
 }
 
@@ -230,21 +222,15 @@ const styles = StyleSheet.create({
     padding: 24,
   },
 
-  title: {
-    fontSize: 30,
-    fontWeight: "700",
-    color: Colors.forest,
-    textAlign: "center",
-    marginTop: 60,
-  },
 
 subtitle: {
   fontSize: 17,
-  fontWeight: "600",
+  fontWeight: "500",
   color: Colors.forest,
-  textAlign: "center",
+  textAlign: "left",
   lineHeight: 28,
 },
+
   sectionTitle: {
   fontSize: 22,
   fontWeight: "700",
@@ -277,7 +263,7 @@ infoCard: {
   borderRadius: 20,
   paddingVertical: 12,
   paddingHorizontal: 18,
-  marginTop: 20,
+  marginTop: -20,
   marginBottom: 18,
 },
 
@@ -287,5 +273,13 @@ selectedChip: {
 
 selectedChipText: {
   color: "white",
+},
+
+infoTitle: {
+  fontSize: 20,
+  fontWeight: "700",
+  color: Colors.forest,
+  marginBottom: 8,
+  textAlign: "left",
 },
 });

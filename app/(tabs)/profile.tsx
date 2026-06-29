@@ -1,7 +1,13 @@
 import Colors from "@/constants/colors";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useEffect, useState } from "react";
 import AppBackground from "@/components/AppBackground";
+import HealthProfileSection from "@/components/HealthProfileSection";
 import { getScanHistory } from "@/utils/storage";
 
 export default function ProfileScreen() {
@@ -39,10 +45,15 @@ useEffect(() => {
 }, []);
   return (
     <AppBackground>
-    <View style={styles.container}>
+      <ScrollView
+    style={styles.container}>
+      showsVerticalScrollIndicator={false}
+
       <Text style={styles.title}>
         My Profile
       </Text>
+
+      <HealthProfileSection />
 
       <View style={styles.card}>
         <Text style={styles.label}>
@@ -101,7 +112,8 @@ useEffect(() => {
           EatSafe helps users understand whether packaged food products are healthy by analyzing barcode and nutrition information.
         </Text>
       </View>
-    </View>
+    </ScrollView>
+
     </AppBackground>
   );
 }
