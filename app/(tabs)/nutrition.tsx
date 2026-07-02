@@ -6,6 +6,7 @@ import {
 } from "@/services/geminiApi";
 import { getProductByBarcode } from "@/services/openFoodFacts";
 import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -17,8 +18,14 @@ const [fat, setFat] = useState("Loading...");
 const [protein, setProtein] = useState("Loading...");
 const [productName, setProductName] = useState("Loading...");
 const [salt, setSalt] = useState("Loading...");
+
 const [aiInsight, setAiInsight] =
   useState("Analyzing...");
+
+  const [mainConcern, setMainConcern] = useState("");
+const [goalAdvice, setGoalAdvice] = useState("");
+const [recommendation, setRecommendation] = useState("");
+const [overallVerdict, setOverallVerdict] = useState("");
 const ICMR_SUGAR = 50;
 const ICMR_FAT = 65;
 const ICMR_PROTEIN = 50;
@@ -81,25 +88,31 @@ setSalt(
 
 const insight =
   await generateNutritionInsight(
-    String(
-      n["energy-kcal_100g"] || 0
-    ),
-    String(
-      n.sugars_100g || 0
-    ),
-    String(
-      n.fat_100g || 0
-    ),
-    String(
-      n.proteins_100g || 0
-    ),
-    String(
-      n.salt_100g || 0
-    )
+    String(n["energy-kcal_100g"] || "N/A"),
+    String(n.sugars_100g || "N/A"),
+    String(n.fat_100g || "N/A"),
+    String(n.proteins_100g || "N/A"),
+    String(n.salt_100g || "N/A")
   );
 
 setAiInsight(insight);
-    }
+
+const concern =
+  insight.match(/Main Concern:\s*([\s\S]*?)Health Goal:/)?.[1]?.trim() || "";
+
+const goal =
+  insight.match(/Health Goal:\s*([\s\S]*?)Recommendation:/)?.[1]?.trim() || "";
+
+const advice =
+  insight.match(/Recommendation:\s*([\s\S]*?)Overall Verdict:/)?.[1]?.trim() || "";
+
+const finalVerdict =
+  insight.match(/Overall Verdict:\s*([\s\S]*)/)?.[1]?.trim() || "";
+
+setMainConcern(concern);
+setGoalAdvice(goal);
+setRecommendation(advice);
+setOverallVerdict(finalVerdict);    }
   }
 
   loadNutrition();
@@ -342,13 +355,119 @@ function getPercentage(
 </View>
           </View>
           <View style={styles.insightCard}>
-  <Text style={styles.insightTitle}>
-    ✨ AI Insight
-  </Text>
+  <View style={styles.insightHeader}>
+  <Ionicons
+  name="fitness"
+  size={24}
+  color={Colors.forest}
+  style={styles.icon}
+/>
 
-  <Text style={styles.insightText}>
-  {aiInsight}
-</Text>
+  <Text style={styles.insightTitle}>
+    Personalized Health Insight
+  </Text>
+</View>
+
+  <View style={styles.section}>
+    <View style={styles.sectionHeader}>
+  <Ionicons
+  name="alert-circle"
+  size={22}
+  color="#E53935"
+  style={{ marginRight: 10 }}
+/>
+
+  <Text style={styles.sectionHeading}>
+    Main Concern
+  </Text>
+</View>
+
+    <Text style={styles.insightText}>
+      {mainConcern}
+    </Text>
+  </View>
+
+  <View style={styles.section}>
+    <View style={styles.sectionHeader}>
+  <Ionicons
+  name="flag"
+  size={22}
+  color="#FB8C00"
+  style={styles.icon}
+/>
+
+  <Text style={styles.sectionHeading}>
+    For Your Goals
+  </Text>
+</View>
+
+    <Text style={styles.insightText}>
+      {goalAdvice}
+    </Text>
+  </View>
+
+  <View style={styles.section}>
+   <View style={styles.sectionHeader}>
+  <Ionicons
+  name="bulb"
+  size={22}
+  color="#F9A825"
+  style={styles.icon}
+/>
+
+  <Text style={styles.sectionHeading}>
+    Recommendation
+  </Text>
+</View>
+
+    <Text style={styles.insightText}>
+      {recommendation}
+    </Text>
+  </View>
+
+  <View style={styles.section}>
+    <View style={styles.sectionHeader}>
+  <Ionicons
+  name="checkmark-circle"
+  size={22}
+  color="#43A047"
+  style={styles.icon}
+/>
+
+  <Text style={styles.sectionHeading}>
+    Overall Verdict
+  </Text>
+</View>
+
+  <View
+  style={{
+    alignSelf: "flex-start",
+    backgroundColor:
+      overallVerdict === "Recommended"
+        ? "#E8F5E9"
+        : "#FDECEC",
+
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderRadius: 30,
+    marginTop: 10,
+  }}
+>
+  <Text
+    style={{
+      color:
+        overallVerdict === "Recommended"
+          ? "#2E7D32"
+          : "#C62828",
+
+      fontWeight: "700",
+      fontSize: 18,
+    }}
+  >
+    {overallVerdict}
+  </Text>
+</View>
+  </View>
 </View>
         </ScrollView>
       </View>
@@ -469,5 +588,58 @@ insightText: {
   fontSize: 15,
   lineHeight: 24,
   color: Colors.ink2,
+},
+
+section: {
+  marginTop: 18,
+},
+
+sectionHeading: {
+  fontSize: 17,
+  fontWeight: "700",
+  color: Colors.forest,
+  marginBottom: 8,
+},
+
+verdict: {
+  fontSize: 20,
+  fontWeight: "700",
+},
+
+insightHeader: {
+  flexDirection: "row",
+  alignItems: "center",
+  marginBottom: 18,
+},
+
+sectionHeader: {
+  flexDirection: "row",
+  alignItems: "center",
+  marginBottom: 10,
+},
+
+icon: {
+  marginRight: 10,
+},
+
+headerRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  marginBottom: 12,
+},
+
+headerIcon: {
+  marginRight: 12,
+},
+
+sectionRow: {
+  flexDirection: "row",
+  alignItems: "center",
+  marginTop: 24,
+  marginBottom: 10,
+},
+
+sectionIcon: {
+  marginRight: 10,
 },
 });

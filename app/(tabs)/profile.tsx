@@ -46,35 +46,22 @@ useEffect(() => {
   return (
     <AppBackground>
       <ScrollView
-    style={styles.container}>
-      showsVerticalScrollIndicator={false}
-
+  style={styles.container}
+  showsVerticalScrollIndicator={false}
+>
       <Text style={styles.title}>
         My Profile
       </Text>
 
       <HealthProfileSection />
 
-      <View style={styles.card}>
-        <Text style={styles.label}>
-          App Name
-        </Text>
+<Text style={styles.sectionHeading}>
+  📊 Your Activity
+</Text>
 
-        <Text style={styles.value}>
-          EatSafe 🍃
-        </Text>
-      </View>
+<View style={styles.statsRow}>
 
-      <View style={styles.card}>
-        <Text style={styles.label}>
-          Version
-        </Text>
-
-        <Text style={styles.value}>
-          1.0
-        </Text>
-      </View>
-<View style={styles.card}>
+<View style={styles.statCard}>
   <Text style={styles.label}>
     Total Scans
   </Text>
@@ -84,7 +71,7 @@ useEffect(() => {
   </Text>
 </View>
 
-<View style={styles.card}>
+<View style={styles.statCard}>
   <Text style={styles.label}>
     Healthy Products
   </Text>
@@ -94,7 +81,7 @@ useEffect(() => {
   </Text>
 </View>
 
-<View style={styles.card}>
+<View style={styles.statCard}>
   <Text style={styles.label}>
     Needs Improvement
   </Text>
@@ -111,6 +98,7 @@ useEffect(() => {
         <Text style={styles.about}>
           EatSafe helps users understand whether packaged food products are healthy by analyzing barcode and nutrition information.
         </Text>
+      </View>
       </View>
     </ScrollView>
 
@@ -140,6 +128,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
+  statsRow: {
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+},
+
   label: {
     fontSize: 14,
     color: Colors.ink2,
@@ -147,13 +141,30 @@ const styles = StyleSheet.create({
   },
 
   value: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: Colors.forest,
-  },
+  fontSize: 36,
+  fontWeight: "700",
+  color: Colors.forest,
+  marginTop: 8,
+},
 
   about: {
     color: Colors.ink2,
     lineHeight: 24,
   },
+
+  sectionHeading: {
+  fontSize: 26,
+  fontWeight: "700",
+  color: Colors.forest,
+  marginTop: 30,
+  marginBottom: 18,
+},
+
+statCard: {
+  width: "48%",
+  backgroundColor: "rgba(255,255,255,0.85)",
+  borderRadius: 22,
+  padding: 18,
+  marginBottom: 14,
+}, 
 });

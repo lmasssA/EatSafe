@@ -22,6 +22,10 @@ export default function ResultScreen() {
   const [brand, setBrand] = useState("");
   const [grade, setGrade] = useState("A");
   const [summary, setSummary] = useState("");
+  const [mainConcern, setMainConcern] = useState("");
+const [healthGoalInsight, setHealthGoalInsight] = useState("");
+const [recommendation, setRecommendation] = useState("");
+const [overallVerdict, setOverallVerdict] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
 const [sugar, setSugar] = useState(0);

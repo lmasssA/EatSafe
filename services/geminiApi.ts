@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { getHealthProfile } from "@/utils/healthStorage";
 
 const client = new OpenAI({
   apiKey: process.env.EXPO_PUBLIC_OPENROUTER_API_KEY,
@@ -33,26 +34,73 @@ export async function generateNutritionInsight(
   protein: string,
   salt: string
 ) {
-  try {
-    const prompt = `
-You are a nutrition expert.
+    try {
+  const profile = await getHealthProfile();
 
-Analyze this food product per 100g:
+  const prompt = `
+You are an experienced clinical nutritionist.
 
+Analyze this packaged food product per 100g.
+
+Nutrition Information:
 Calories: ${calories}
 Sugar: ${sugar}
 Fat: ${fat}
 Protein: ${protein}
 Salt: ${salt}
 
-Important:
-- If any value is N/A, unavailable, empty, or unknown, do NOT assume it is zero.
-- Mention that the information is unavailable.
-- Only analyze the nutrition values that are available.
+User Health Profile:
+Health Conditions:
+${
+profile.conditions.length
+  ? profile.conditions.join(", ")
+  : "None"
+}
 
-Give a short 2-3 sentence health insight.
-Keep it simple and easy for everyday users.
-Do not use bullet points.
+Dietary Preferences:
+${
+profile.dietaryPreferences.length
+  ? profile.dietaryPreferences.join(", ")
+  : "None"
+}
+
+Health Goal:
+${profile.healthGoal || "None"}
+
+Rules:
+
+1. If a nutrition value is unavailable (N/A, missing, or unknown), NEVER describe it as low, high, absent, zero, or lacking.
+
+2.Only discuss nutrients whose values are explicitly available.
+
+If protein or fat are unavailable, do not mention them in your recommendation.
+
+Never invent nutrition facts.
+3. Base conclusions ONLY on the available nutrition values.
+4. Personalize the advice according to the user's health conditions, dietary preferences and health goal.
+5. Keep the language simple.
+6. Avoid medical jargon.
+7. Keep every section short.
+8. Do NOT use markdown (** or ##).
+9. Do NOT use bullet points.
+10. Return exactly the following format:
+
+Main Concern:
+(One short sentence.)
+
+Health Goal:
+(One short sentence related to the user's selected goal.)
+
+Recommendation:
+(One practical recommendation.)
+
+Overall Verdict:
+Choose ONLY ONE of:
+Excellent Choice
+Good Choice
+Acceptable Occasionally
+Limit Consumption
+Not Recommended
 `;
 
     console.log("GENERATING INSIGHT...");
