@@ -2,6 +2,7 @@ import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
 import { calculateGrade, generateSummary } from "@/utils/aiEngine";
+import { saveCurrentProduct } from "@/utils/currentProduct";
 import { saveScan } from "@/utils/storage";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ import {
 
 export default function ResultScreen() {
   const { barcode } = useLocalSearchParams();
+  console.log("RESULT BARCODE:", barcode);
 
   const [productName, setProductName] = useState("Product Found");
   const [brand, setBrand] = useState("");
@@ -38,6 +40,7 @@ const [fat, setFat] = useState(0);
       const data = await getProductByBarcode(String(barcode));
 
       if (data?.product) {
+        await saveCurrentProduct(data.product);
         console.log("NUTRIMENTS:", data.product.nutriments);
 console.log("INGREDIENTS:", data.product.ingredients_text);
         setProductName(
@@ -294,14 +297,16 @@ setFat(
 
         <Pressable
           style={styles.ingredientsButton}
-          onPress={() =>
-            router.push({
-              pathname: "/ingredients",
-              params: {
-                barcode: String(barcode),
-              },
-            })
-          }
+          onPress={() => {
+  console.log("OPENING INGREDIENTS WITH:", barcode);
+
+  router.push({
+    pathname: "/ingredients",
+    params: {
+      barcode: String(barcode),
+    },
+  });
+}}
         >
           <Text style={styles.buttonText}>
             View Ingredients
@@ -310,14 +315,16 @@ setFat(
 
         <Pressable
           style={styles.nutritionButton}
-          onPress={() =>
-            router.push({
-              pathname: "/nutrition",
-              params: {
-                barcode: String(barcode),
-              },
-            })
-          }
+          onPress={() => {
+  console.log("OPENING NUTRITION WITH:", barcode);
+
+  router.push({
+    pathname: "/nutrition",
+    params: {
+      barcode: String(barcode),
+    },
+  });
+}}
         >
           <Text style={styles.buttonText}>
             View Nutrition

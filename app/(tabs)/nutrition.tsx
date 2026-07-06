@@ -1,17 +1,17 @@
 import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import {
-  testGemini,
-  generateNutritionInsight,
+  generateNutritionInsight
 } from "@/services/geminiApi";
 import { getProductByBarcode } from "@/services/openFoodFacts";
-import { router, Stack, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function NutritionScreen() {
   const { barcode } = useLocalSearchParams();
+  console.log("NUTRITION BARCODE:", barcode);
 const [energy, setEnergy] = useState("Loading...");
 const [sugar, setSugar] = useState("Loading...");
 const [fat, setFat] = useState("Loading...");
@@ -36,20 +36,28 @@ const sugarPercent = Math.round(
 const ICMR_CALORIES = 2000;
 useEffect(() => {
   async function loadNutrition() {
+    try {
     if (!barcode) return;
-
+console.log("STEP 1");
   
-console.log("BEFORE GEMINI");
 
-const response = await testGemini();
+    const data = await getProductByBarcode(String(barcode))
+    console.log("STEP 2");
 
-console.log("AFTER GEMINI");
-console.log("GEMINI RESPONSE:", response);
+console.log(data);
 
-    const data = await getProductByBarcode(String(barcode));
+console.log(data.product);
+
+console.log(data.product.nutriments);
+
+    console.log(
+  "PRODUCT FROM API:",
+  data?.product?.product_name
+);
 
     if (data?.product?.nutriments) {
       const n = data.product.nutriments;
+      console.log("STEP 3", n);
 setProductName(
   data.product.product_name ||
   data.product.product_name_en ||
@@ -86,6 +94,13 @@ setSalt(
     : "N/A"
 );
 
+console.log("STEP 4 - BEFORE GEMINI");
+
+console.log(
+  "GENERATING AI FOR:",
+  data?.product?.product_name
+);
+
 const insight =
   await generateNutritionInsight(
     String(n["energy-kcal_100g"] || "N/A"),
@@ -95,6 +110,7 @@ const insight =
     String(n.salt_100g || "N/A")
   );
 
+  console.log("STEP 5 - AFTER GEMINI");
 setAiInsight(insight);
 
 const concern =
@@ -113,7 +129,13 @@ setMainConcern(concern);
 setGoalAdvice(goal);
 setRecommendation(advice);
 setOverallVerdict(finalVerdict);    }
+
+console.log("STEP 6 - FINISHED");
+  }   catch (error) {
+    console.log("LOAD ERROR:", error);
   }
+}
+
 
   loadNutrition();
 }, [barcode]);
@@ -125,6 +147,10 @@ function getPercentage(
     (value / limit) * 100,
     100
   );
+}
+
+function isAvailable(value: string) {
+  return value !== "N/A";
 }
   return (
   <AppBackground>
@@ -171,9 +197,12 @@ function getPercentage(
   </Text>
 
   <Text style={styles.nutritionValue}>
-    {energy} kcal / 2000 kcal
-  </Text>
+  {isAvailable(energy)
+    ? `${energy} kcal / 2000 kcal`
+    : "Not Available"}
+</Text>
 
+  {isAvailable(energy) && (
   <View style={styles.progressTrack}>
     <View
       style={[
@@ -193,14 +222,17 @@ function getPercentage(
       ]}
     />
   </View>
+)}
 
   <Text style={styles.nutritionStatus}>
-    {Number(energy) > 400
-      ? "🔴 High"
-      : Number(energy) > 200
-      ? "🟡 Moderate"
-      : "🟢 Low"}
-  </Text>
+  {!isAvailable(energy)
+    ? "⚪ Data unavailable"
+    : Number(energy) > 400
+    ? "🔴 High"
+    : Number(energy) > 200
+    ? "🟡 Moderate"
+    : "🟢 Low"}
+</Text>
 </View>
 
            <View style={styles.nutritionCard}>
