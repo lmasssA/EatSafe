@@ -3,11 +3,11 @@ import Colors from "@/constants/colors";
 import {
   generateNutritionInsight
 } from "@/services/geminiApi";
-import { getProductByBarcode } from "@/services/openFoodFacts";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getCurrentProduct } from "../../utils/currentProduct";
 
 export default function NutritionScreen() {
   const { barcode } = useLocalSearchParams();
@@ -41,26 +41,26 @@ useEffect(() => {
 console.log("STEP 1");
   
 
-    const data = await getProductByBarcode(String(barcode))
+    const product = await getCurrentProduct();
     console.log("STEP 2");
 
-console.log(data);
+console.log(product);
 
-console.log(data.product);
+console.log(product);
 
-console.log(data.product.nutriments);
+console.log(product.nutriments);
 
-    console.log(
-  "PRODUCT FROM API:",
-  data?.product?.product_name
+   console.log(
+  "CURRENT PRODUCT:",
+  product?.product_name
 );
 
-    if (data?.product?.nutriments) {
-      const n = data.product.nutriments;
+    if (product?.nutriments) {
+      const n = product.nutriments;
       console.log("STEP 3", n);
 setProductName(
-  data.product.product_name ||
-  data.product.product_name_en ||
+  product.product_name ||
+  product.product_name_en ||
   "Unknown Product"
 );
 
@@ -98,7 +98,7 @@ console.log("STEP 4 - BEFORE GEMINI");
 
 console.log(
   "GENERATING AI FOR:",
-  data?.product?.product_name
+ product?.product_name
 );
 
 const insight =

@@ -23,6 +23,7 @@ export default function ScanScreen() {
   console.log("Barcode:", result.data);
 
   setTimeout(() => {
+    console.log("SCANNED BARCODE:", barcode);
     router.push({
   pathname: "/result",
   params: {

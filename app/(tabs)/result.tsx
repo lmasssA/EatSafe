@@ -2,7 +2,6 @@ import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
 import { calculateGrade, generateSummary } from "@/utils/aiEngine";
-import { saveCurrentProduct } from "@/utils/currentProduct";
 import { saveScan } from "@/utils/storage";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -15,12 +14,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import {
+  clearCurrentProduct,
+  saveCurrentProduct,
+} from "../../utils/currentProduct";
 
 export default function ResultScreen() {
   const { barcode } = useLocalSearchParams();
   console.log("RESULT BARCODE:", barcode);
 
-  const [productName, setProductName] = useState("Product Found");
+  const [productName, setProductName] = useState("");
   const [brand, setBrand] = useState("");
   const [grade, setGrade] = useState("A");
   const [summary, setSummary] = useState("");
@@ -29,17 +32,20 @@ const [healthGoalInsight, setHealthGoalInsight] = useState("");
 const [recommendation, setRecommendation] = useState("");
 const [overallVerdict, setOverallVerdict] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [productFound, setProductFound] = useState(true);
 
 const [sugar, setSugar] = useState(0);
 const [fat, setFat] = useState(0);
 
   useEffect(() => {
     async function loadProduct() {
+      try {
       if (!barcode) return;
 
       const data = await getProductByBarcode(String(barcode));
 
       if (data?.product) {
+        setProductFound(true);
         await saveCurrentProduct(data.product);
         console.log("NUTRIMENTS:", data.product.nutriments);
 console.log("INGREDIENTS:", data.product.ingredients_text);
@@ -111,6 +117,14 @@ setFat(
     new Date().toISOString(),
 });
       }
+    
+} catch (error) {
+    console.log("LOAD PRODUCT ERROR:", error);
+
+    await clearCurrentProduct();
+
+    setProductFound(false);
+}
     }
 
     loadProduct();
@@ -124,6 +138,60 @@ setFat(
       : grade === "C"
       ? "#F57C00"
       : "#C62828";
+
+if (!productFound) {
+  return (
+    <AppBackground>
+      <>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 24,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: "700",
+              color: Colors.forest,
+              marginBottom: 16,
+            }}
+          >
+            Product Not Found
+          </Text>
+
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 17,
+              color: Colors.ink2,
+              marginBottom: 30,
+            }}
+          >
+            This barcode isn't available in OpenFoodFacts.
+          </Text>
+
+          <TouchableOpacity
+            style={styles.ingredientsButton}
+            onPress={() => router.replace("/scan")}
+          >
+            <Text style={styles.buttonText}>
+              Scan Another Product
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </>
+    </AppBackground>
+  );
+}
 
   return (
     <AppBackground>

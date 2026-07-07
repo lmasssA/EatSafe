@@ -1,6 +1,6 @@
 import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
-import { getProductByBarcode } from "@/services/openFoodFacts";
+import { getCurrentProduct } from "../../utils/currentProduct";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -19,16 +19,14 @@ export default function IngredientsScreen() {
     async function loadIngredients() {
       if (!barcode) return;
 
-      const data = await getProductByBarcode(
-        String(barcode)
-      );
+      const product = await getCurrentProduct();
 
-      console.log("INGREDIENT DATA:", data?.product);
+      console.log("INGREDIENT DATA:", product);
       if (
-        data?.product?.ingredients_text
+        product?.ingredients_text
       ) {
         const list =
-          data.product.ingredients_text
+          product.ingredients_text
             .split(",");
 
         setIngredients(list);
