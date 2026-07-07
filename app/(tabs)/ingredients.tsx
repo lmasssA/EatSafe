@@ -1,6 +1,6 @@
 import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
-import { getCurrentProduct } from "../../utils/currentProduct";
+import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { getCurrentProduct } from "../../utils/currentProduct";
 export default function IngredientsScreen() {
   const { barcode } = useLocalSearchParams();
   console.log("INGREDIENT BARCODE:", barcode);
@@ -83,20 +84,19 @@ ingredient.includes("cane sugar")
         showsVerticalScrollIndicator={false}
       >
         <TouchableOpacity
-          style={styles.backButton}
-          onPress={() =>
-            router.navigate({
-              pathname: "/result",
-              params: {
-                barcode: String(barcode),
-              },
-            })
-          }
-        >
-          <Text style={styles.backText}>
-            ← Results
-          </Text>
-        </TouchableOpacity>
+  onPress={() => router.back()}
+  style={styles.backButton}
+>
+  <Ionicons
+    name="chevron-back"
+    size={24}
+    color={Colors.forest}
+  />
+
+  <Text style={styles.navText}>
+    Results
+  </Text>
+</TouchableOpacity>
 
         <Text style={styles.pageTitle}>
           Ingredients
@@ -205,4 +205,12 @@ const styles = StyleSheet.create({
   lineHeight: 22,
   color: Colors.ink2,
 },
+
+navText: {
+  fontSize: 17,
+  fontWeight: "600",
+  color: Colors.forest,
+  marginLeft: 4,
+},
+
 });

@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native";
 import { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import AppBackground from "@/components/AppBackground";
 import HealthProfileSection from "@/components/HealthProfileSection";
 import { getScanHistory } from "@/utils/storage";
@@ -55,9 +56,25 @@ useEffect(() => {
 
       <HealthProfileSection />
 
-<Text style={styles.sectionHeading}>
-  📊 Your Activity
-</Text>
+<View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 18,
+  }}
+>
+  <Ionicons
+    name="stats-chart"
+    size={26}
+    color={Colors.forest}
+    style={{ marginRight: 8 }}
+  />
+
+  <Text style={styles.sectionHeading}>
+    Your Activity
+  </Text>
+</View>
 
 <View style={styles.statsRow}>
 

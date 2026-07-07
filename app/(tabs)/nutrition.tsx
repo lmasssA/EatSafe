@@ -192,9 +192,16 @@ function isAvailable(value: string) {
   {productName}
 </Text>
            <View style={styles.nutritionCard}>
-  <Text style={styles.nutritionTitle}>
-    🔥 Calories
+<View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+  <Ionicons
+    name="flame"
+    size={22}
+    color="#FF7043"
+  />
+  <Text style={styles.nutrientTitle}>
+    Calories
   </Text>
+</View>
 
   <Text style={styles.nutritionValue}>
   {isAvailable(energy)
@@ -228,17 +235,32 @@ function isAvailable(value: string) {
   {!isAvailable(energy)
     ? "⚪ Data unavailable"
     : Number(energy) > 400
-    ? "🔴 High"
+    ? "High"
     : Number(energy) > 200
-    ? "🟡 Moderate"
-    : "🟢 Low"}
+    ? "Moderate"
+    : "Low"}
 </Text>
 </View>
 
            <View style={styles.nutritionCard}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="nutrition"
+    size={22}
+    color="#F9A825"
+    style={{ marginRight: 8 }}
+  />
+
   <Text style={styles.nutritionTitle}>
-    🍬 Sugar
+    Sugar
   </Text>
+</View>
 
   <Text style={styles.nutritionValue}>
     {sugar} g / {ICMR_SUGAR} g
@@ -265,18 +287,33 @@ function isAvailable(value: string) {
   </View>
 
   <Text style={styles.nutritionStatus}>
-    {Number(sugar) > 15
-      ? "🔴 High"
-      : Number(sugar) > 5
-      ? "🟡 Moderate"
-      : "🟢 Low"}
-  </Text>
+  {Number(sugar) > 15
+    ? "High"
+    : Number(sugar) > 5
+    ? "Moderate"
+    : "Low"}
+</Text>
 </View>
 
             <View style={styles.nutritionCard}>
+<View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="water"
+    size={22}
+    color="#EF6C00"
+    style={{ marginRight: 8 }}
+  />
+
   <Text style={styles.nutritionTitle}>
-    🧈 Fat
+    Fat
   </Text>
+</View>
 
   <Text style={styles.nutritionValue}>
   {fat} g / {ICMR_FAT} g
@@ -304,17 +341,32 @@ function isAvailable(value: string) {
 
   <Text style={styles.nutritionStatus}>
   {Number(fat) > 30
-    ? "🔴 High"
+    ? "High"
     : Number(fat) > 15
-    ? "🟡 Moderate"
-    : "🟢 Low"}
+    ? "Moderate"
+    : "Low"}
 </Text>
 </View>
 
           <View style={styles.nutritionCard}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="fitness"
+    size={22}
+    color="#43A047"
+    style={{ marginRight: 8 }}
+  />
+
   <Text style={styles.nutritionTitle}>
-    💪 Protein
+    Protein
   </Text>
+</View>
 
   <Text style={styles.nutritionValue}>
     {protein} g / {ICMR_PROTEIN} g
@@ -342,17 +394,32 @@ function isAvailable(value: string) {
 
   <Text style={styles.nutritionStatus}>
     {Number(protein) > 10
-      ? "🟢 Good"
+      ? "Good"
       : Number(protein) > 5
-      ? "🟡 Moderate"
-      : "🔴 Low"}
+      ? "Moderate"
+      : "Low"}
   </Text>
 </View>
 
             <View style={styles.nutritionCard}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="restaurant"
+    size={22}
+    color="#5C6BC0"
+    style={{ marginRight: 8 }}
+  />
+
   <Text style={styles.nutritionTitle}>
-    🧂 Salt
+    Salt
   </Text>
+</View>
 
   <Text style={styles.nutritionValue}>
   {salt} g / {ICMR_SALT} g

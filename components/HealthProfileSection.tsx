@@ -4,6 +4,7 @@ import {
   saveHealthProfile,
 } from "@/utils/healthStorage";
 import { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import {
   Pressable,
   ScrollView,
@@ -77,9 +78,24 @@ useEffect(() => {
       >
 
 <View style={styles.infoCard}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="leaf"
+    size={24}
+    color={Colors.forest}
+    style={{ marginRight: 8 }}
+  />
+
   <Text style={styles.infoTitle}>
-    🍃 Personalized Nutrition
+    Personalized Nutrition
   </Text>
+</View>
 
   <Text style={styles.subtitle}>
     Your AI recommendations are personalized based on your health conditions, dietary preferences, and goals.
@@ -123,8 +139,15 @@ useEffect(() => {
           isSelected && styles.selectedChipText,
         ]}
       >
-        {isSelected ? "✓ " : ""}
-        {condition.emoji} {condition.name}
+        {isSelected && (
+  <Ionicons
+    name="checkmark-circle"
+    size={20}
+    color="white"
+    style={{ marginRight: 8 }}
+  />
+)}
+        {condition.name}
       </Text>
     </Pressable>
   );
@@ -169,8 +192,15 @@ useEffect(() => {
               styles.selectedChipText,
           ]}
         >
-          {isSelected ? "✓ " : ""}
-          {preference.emoji} {preference.name}
+          {isSelected && (
+  <Ionicons
+    name="checkmark-circle"
+    size={20}
+    color="white"
+    style={{ marginRight: 8 }}
+  />
+)}
+          {preference.name}
         </Text>
       </Pressable>
     );
@@ -204,8 +234,15 @@ useEffect(() => {
               styles.selectedChipText,
           ]}
         >
-          {isSelected ? "✓ " : ""}
-          {goal.emoji} {goal.name}
+         {isSelected && (
+  <Ionicons
+    name="checkmark-circle"
+    size={20}
+    color="white"
+    style={{ marginRight: 8 }}
+  />
+)}
+          {goal.name}
         </Text>
       </Pressable>
     );

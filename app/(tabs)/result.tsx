@@ -3,6 +3,7 @@ import Colors from "@/constants/colors";
 import { getProductByBarcode } from "@/services/openFoodFacts";
 import { calculateGrade, generateSummary } from "@/utils/aiEngine";
 import { saveScan } from "@/utils/storage";
+import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -209,11 +210,22 @@ if (!productFound) {
   }}
 >
      <View style={styles.topBar}>
+  
   <TouchableOpacity
-  onPress={() => router.navigate("/scan")}
+  onPress={() => router.back()}
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
 >
+  <Ionicons
+    name="chevron-back"
+    size={24}
+    color={Colors.forest}
+  />
+
   <Text style={styles.navText}>
-    ← Scan
+    Scan
   </Text>
 </TouchableOpacity>
 
@@ -293,7 +305,27 @@ if (!productFound) {
         fontWeight: "600",
       }}
     >
-      🔴 High Sugar
+      <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  }}
+>
+  <Ionicons
+    name="alert-circle"
+    size={18}
+    color="#C62828"
+  />
+  <Text
+    style={{
+      color: "#C62828",
+      fontWeight: "600",
+    }}
+  >
+    High Sugar
+  </Text>
+</View>
     </Text>
   </View>
 ) : (
@@ -311,7 +343,27 @@ if (!productFound) {
         fontWeight: "600",
       }}
     >
-      🟢 Low Sugar
+      <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  }}
+>
+  <Ionicons
+    name="checkmark-circle"
+    size={18}
+    color="#2E7D32"
+  />
+  <Text
+    style={{
+      color: "#2E7D32",
+      fontWeight: "600",
+    }}
+  >
+    Low Sugar
+  </Text>
+</View>
     </Text>
   </View>
 )}
@@ -331,7 +383,27 @@ if (!productFound) {
         fontWeight: "600",
       }}
     >
-      🔴 High Fat
+      <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  }}
+>
+  <Ionicons
+    name="alert-circle"
+    size={18}
+    color="#C62828"
+  />
+  <Text
+    style={{
+      color: "#C62828",
+      fontWeight: "600",
+    }}
+  >
+    High Fat
+  </Text>
+</View>
     </Text>
   </View>
 ) : (
@@ -349,7 +421,11 @@ if (!productFound) {
         fontWeight: "600",
       }}
     >
-      🟢 Low Fat
+      <Ionicons
+  name="checkmark-circle"
+  size={18}
+  color="#2E7D32"
+/>
     </Text>
   </View>
 )}

@@ -4,6 +4,7 @@ import {
   getHealthProfile,
   saveHealthProfile,
 } from "@/utils/healthStorage";
+import { Ionicons } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -15,27 +16,27 @@ import {
 } from "react-native";
 
 const HEALTH_CONDITIONS = [
-  { emoji: "💉", name: "Diabetes" },
-  { emoji: "❤️", name: "Heart Disease" },
-  { emoji: "🩸", name: "High Blood Pressure" },
-  { emoji: "🧪", name: "High Cholesterol" },
-  { emoji: "🫘", name: "Kidney Disease" },
-  { emoji: "🤰", name: "Pregnancy" },
+  { icon: "water", color: "#4CAF50", name: "Diabetes" },
+  { icon: "heart", color: "#E53935", name: "Heart Disease" },
+  { icon: "medkit", color: "#D32F2F", name: "High Blood Pressure" },
+  { icon: "flask", color: "#43A047", name: "High Cholesterol" },
+  { icon: "fitness", color: "#8D6E63", name: "Kidney Disease" },
+  { icon: "woman", color: "#F48FB1", name: "Pregnancy" },
 ];
 
 const DIETARY_PREFERENCES = [
-  { emoji: "🥦", name: "Vegetarian" },
-  { emoji: "🌱", name: "Vegan" },
-  { emoji: "🥛", name: "Lactose Intolerant" },
-  { emoji: "🌾", name: "Gluten-Free" },
-  { emoji: "🥜", name: "Nut Allergy" },
+  { icon: "leaf", color: "#43A047", name: "Vegetarian" },
+  { icon: "leaf-outline", color: "#66BB6A", name: "Vegan" },
+  { icon: "cafe", color: "#8D6E63", name: "Lactose Intolerant" },
+  { icon: "nutrition", color: "#F9A825", name: "Gluten-Free" },
+  { icon: "warning", color: "#FF9800", name: "Nut Allergy" },
 ];
 
 const HEALTH_GOALS = [
-  { emoji: "⚖️", name: "Lose Weight" },
-  { emoji: "💪", name: "Gain Muscle" },
-  { emoji: "🥗", name: "Eat Healthier" },
-  { emoji: "❤️", name: "Maintain Health" },
+  { icon: "scale", color: "#607D8B", name: "Lose Weight" },
+  { icon: "barbell", color: "#43A047", name: "Gain Muscle" },
+  { icon: "nutrition", color: "#2E7D32", name: "Eat Healthier" },
+  { icon: "heart", color: "#E53935", name: "Maintain Health" },
 ];
 
 export default function HealthProfileScreen() {
@@ -84,9 +85,26 @@ useEffect(() => {
         style={styles.container}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>
-          🌿 Your Health Profile
-        </Text>
+       <View
+  style={{
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 60,
+    marginBottom: 10,
+  }}
+>
+  <Ionicons
+    name="leaf"
+    size={30}
+    color={Colors.forest}
+    style={{ marginRight: 10 }}
+  />
+
+  <Text style={styles.title}>
+    Your Health Profile
+  </Text>
+</View>
 <View style={styles.infoCard}>
         <Text style={styles.subtitle}>
           Select your health conditions to receive personalized nutrition insights and smarter food recommendations.
@@ -124,15 +142,37 @@ useEffect(() => {
         }
       }}
     >
-      <Text
-        style={[
-          styles.chipText,
-          isSelected && styles.selectedChipText,
-        ]}
-      >
-        {isSelected ? "✓ " : ""}
-        {condition.emoji} {condition.name}
-      </Text>
+      <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
+>
+  {isSelected && (
+    <Ionicons
+      name="checkmark"
+      size={20}
+      color="white"
+      style={{ marginRight: 8 }}
+    />
+  )}
+
+  <Ionicons
+    name={condition.icon as any}
+    size={20}
+    color={isSelected ? "white" : condition.color}
+    style={{ marginRight: 10 }}
+  />
+
+  <Text
+    style={[
+      styles.chipText,
+      isSelected && styles.selectedChipText,
+    ]}
+  >
+    {condition.name}
+  </Text>
+</View>
     </Pressable>
   );
 })}
@@ -169,16 +209,38 @@ useEffect(() => {
           }
         }}
       >
-        <Text
-          style={[
-            styles.chipText,
-            isSelected &&
-              styles.selectedChipText,
-          ]}
-        >
-          {isSelected ? "✓ " : ""}
-          {preference.emoji} {preference.name}
-        </Text>
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
+>
+  {isSelected && (
+    <Ionicons
+      name="checkmark"
+      size={20}
+      color="white"
+      style={{ marginRight: 8 }}
+    />
+  )}
+
+  <Ionicons
+    name={preference.icon as any}
+    size={20}
+    color={isSelected ? "white" : preference.color}
+    style={{ marginRight: 10 }}
+  />
+
+  <Text
+    style={[
+      styles.chipText,
+      isSelected &&
+        styles.selectedChipText,
+    ]}
+  >
+    {preference.name}
+  </Text>
+</View>
       </Pressable>
     );
   })}
@@ -204,16 +266,38 @@ useEffect(() => {
           setSelectedHealthGoal(goal.name)
         }
       >
-        <Text
-          style={[
-            styles.chipText,
-            isSelected &&
-              styles.selectedChipText,
-          ]}
-        >
-          {isSelected ? "✓ " : ""}
-          {goal.emoji} {goal.name}
-        </Text>
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
+>
+  {isSelected && (
+    <Ionicons
+      name="checkmark"
+      size={20}
+      color="white"
+      style={{ marginRight: 8 }}
+    />
+  )}
+
+  <Ionicons
+    name={goal.icon as any}
+    size={20}
+    color={isSelected ? "white" : goal.color}
+    style={{ marginRight: 10 }}
+  />
+
+  <Text
+    style={[
+      styles.chipText,
+      isSelected &&
+        styles.selectedChipText,
+    ]}
+  >
+    {goal.name}
+  </Text>
+</View>
       </Pressable>
     );
   })}

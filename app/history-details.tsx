@@ -1,5 +1,6 @@
 import AppBackground from "@/components/AppBackground";
 import Colors from "@/constants/colors";
+import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import {
   Image,
@@ -56,15 +57,44 @@ export default function HistoryDetailsScreen() {
 
       <View style={styles.card}>
         
-        <Text style={styles.sectionTitle}>
-  📦 Product Information
-</Text>
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 18,
+  }}
+>
+  <Ionicons
+    name="cube"
+    size={24}
+    color={Colors.forest}
+  />
+
+  <Text style={styles.sectionTitle}>
+    Product Information
+  </Text>
+</View>
 
 
         <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="pricetag"
+    size={20}
+    color={Colors.forest}
+  />
+
   <Text style={styles.infoLabel}>
-    🏷️ Brand
+    Brand
   </Text>
+</View>
 
   <Text style={styles.infoValue}>
     {data.brand}
@@ -73,9 +103,23 @@ export default function HistoryDetailsScreen() {
 
 
        <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="star"
+    size={20}
+    color="#F9A825"
+  />
+
   <Text style={styles.infoLabel}>
-    ⭐ Health Grade
+    Health Grade
   </Text>
+</View>
 
   <Text
     style={[
@@ -99,9 +143,23 @@ export default function HistoryDetailsScreen() {
 </View>
 
        <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="calendar"
+    size={20}
+    color={Colors.forest}
+  />
+
   <Text style={styles.infoLabel}>
-    📅 Scan Date
+    Scan Date
   </Text>
+</View>
 
   <Text style={styles.infoValue}>
     {data.scannedAt
@@ -115,14 +173,44 @@ export default function HistoryDetailsScreen() {
   </Text>
 </View>
 
-<Text style={styles.sectionTitle}>
-  🥗 Nutrition
-</Text>
+<View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginTop: 18,
+    marginBottom: 12,
+  }}
+>
+  <Ionicons
+    name="nutrition"
+    size={24}
+    color={Colors.forest}
+  />
+
+  <Text style={styles.sectionTitle}>
+    Nutrition
+  </Text>
+</View>
 
         <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="flame"
+    size={20}
+    color="#FF7043"
+  />
+
   <Text style={styles.infoLabel}>
-    🔥 Calories
+    Calories
   </Text>
+</View>
 
   <Text style={styles.infoValue}>
     {data.calories ?? "N/A"} kcal
@@ -130,9 +218,23 @@ export default function HistoryDetailsScreen() {
 </View>
 
         <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="cafe"
+    size={20}
+    color="#8E24AA"
+  />
+
   <Text style={styles.infoLabel}>
-    🍬 Sugar
+    Sugar
   </Text>
+</View>
 
   <Text style={styles.infoValue}>
     {data.sugar ?? "N/A"} g
@@ -140,9 +242,23 @@ export default function HistoryDetailsScreen() {
 </View>
 
         <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="water"
+    size={20}
+    color="#F9A825"
+  />
+
   <Text style={styles.infoLabel}>
-    🧈 Fat
+    Fat
   </Text>
+</View>
 
   <Text style={styles.infoValue}>
     {data.fat ?? "N/A"} g
@@ -150,9 +266,23 @@ export default function HistoryDetailsScreen() {
 </View>
 
         <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="barbell"
+    size={20}
+    color="#43A047"
+  />
+
   <Text style={styles.infoLabel}>
-    💪 Protein
+    Protein
   </Text>
+</View>
 
   <Text style={styles.infoValue}>
     {data.protein ?? "N/A"} g
@@ -160,9 +290,23 @@ export default function HistoryDetailsScreen() {
 </View>
 
         <View style={styles.infoRow}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  }}
+>
+  <Ionicons
+    name="water-outline"
+    size={20}
+    color="#90A4AE"
+  />
+
   <Text style={styles.infoLabel}>
-    🧂 Salt
+    Salt
   </Text>
+</View>
 
   <Text style={styles.infoValue}>
     {data.salt ?? "N/A"} g
