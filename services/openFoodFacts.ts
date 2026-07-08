@@ -12,11 +12,10 @@ export async function getProductByBarcode(barcode: string) {
       }
     );
 
-    console.log("API RESPONSE:", response.data);
 
     return response.data;
   } catch (error) {
-    console.log("Open Food Facts Error:", error);
+    console.error("Open Food Facts Error:", error);
     return null;
   }
 }

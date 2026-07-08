@@ -2,21 +2,49 @@ import AppBackground from "@/components/AppBackground";
 import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import PrimaryButton from "@/components/PrimaryButton";
 import Colors from "@/constants/colors";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   return (
     <AppBackground>
+       <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
 
-      <Text style={styles.logo}>🍃</Text>
+   <View
+  style={{
+    alignItems: "center",
+    marginBottom: 16,
+  }}
+>
+  <View
+    style={{
+      position: "relative",
+    }}
+  >
+    <Text style={styles.title}>
+      EatSafe
+    </Text>
 
-      <Text style={styles.title}>EatSafe ✦</Text>
+    <Ionicons
+      name="leaf"
+      size={22}
+      color={Colors.forest}
+      style={{
+        position: "absolute",
+        top: 1,
+        left: 72,
+        transform: [{ rotate: "-10deg" }],
+      }}
+    />
+  </View>
 
-      <Text style={styles.subtitle}>
-        Your AI Food Safety Companion
-      </Text>
+  <Text style={styles.subtitle}>
+    Your AI Food Safety Companion
+  </Text>
+</View>
 
       <PrimaryButton
         title="Scan Product"
@@ -25,29 +53,107 @@ export default function HomeScreen() {
 
       <View style={styles.card}>
 
-        <Text style={styles.cardTitle}>
-          Quick Actions
-        </Text>
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 18,
+  }}
+>
+  <Ionicons
+    name="flash"
+    size={24}
+    color={Colors.forest}
+  />
 
-        <Text style={styles.item}>
-          📷 Scan any packaged food
-        </Text>
+  <Text style={styles.cardTitle}>
+    Quick Actions
+  </Text>
+</View>
 
-        <Text style={styles.item}>
-          🧪 Decode ingredients
-        </Text>
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 14,
+  }}
+>
+  <Ionicons
+    name="camera"
+    size={22}
+    color={Colors.forest}
+    style={{ marginRight: 12 }}
+  />
 
-        <Text style={styles.item}>
-          🤖 Ask AI about your food
-        </Text>
+  <Text style={styles.item}>
+    Scan any packaged food
+  </Text>
+</View>
+
+<View style={styles.divider} />
+
+       <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 14,
+  }}
+>
+  <Ionicons
+    name="flask"
+    size={22}
+    color="#43A047"
+    style={{ marginRight: 12 }}
+  />
+
+  <Text style={styles.item}>
+    Decode ingredients
+  </Text>
+</View>
+
+<View style={styles.divider} />
+
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
+>
+  <Ionicons
+    name="sparkles"
+    size={22}
+    color="#7E57C2"
+    style={{ marginRight: 12 }}
+  />
+
+  <Text style={styles.item}>
+   Get AI-powered insights
+  </Text>
+</View>
 
       </View>
 
       <View style={styles.tip}>
 
-        <Text style={styles.tipTitle}>
-          💡 Health Tip
-        </Text>
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 10,
+  }}
+>
+  <Ionicons
+    name="bulb"
+    size={24}
+    color="#F9A825"
+  />
+
+  <Text style={styles.tipTitle}>
+    Health Tip
+  </Text>
+</View>
 
         <Text style={styles.tipText}>
           Foods with fewer ingredients are often less processed.
@@ -56,6 +162,7 @@ export default function HomeScreen() {
       </View>
 
     </View>
+    </SafeAreaView>
      </AppBackground>
   );
 }
@@ -64,7 +171,8 @@ const styles = StyleSheet.create({
 
   container: {
   flex: 1,
-  padding: 24,
+  paddingHorizontal: 24,
+  paddingTop: 40,
 },
 
   logo: {
@@ -99,12 +207,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: Colors.forest,
-    marginBottom: 15,
   },
 
   item: {
     fontSize: 16,
-    marginBottom: 12,
     color: Colors.ink2,
   },
 
@@ -127,4 +233,11 @@ const styles = StyleSheet.create({
     color: Colors.ink2,
   },
 
+
+divider: {
+  height: 1,
+  backgroundColor: "#E8ECE6",
+  marginVertical: 10,
+  marginLeft: 34,
+},
 });

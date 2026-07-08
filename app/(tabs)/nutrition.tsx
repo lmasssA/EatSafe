@@ -38,15 +38,10 @@ useEffect(() => {
   async function loadNutrition() {
     try {
     if (!barcode) return;
-console.log("STEP 1");
-  
+
 
     const product = await getCurrentProduct();
-    console.log("STEP 2");
-
-console.log(product);
-
-console.log(product);
+   
 
 console.log(product.nutriments);
 
@@ -57,7 +52,7 @@ console.log(product.nutriments);
 
     if (product?.nutriments) {
       const n = product.nutriments;
-      console.log("STEP 3", n);
+      
 setProductName(
   product.product_name ||
   product.product_name_en ||
@@ -94,7 +89,6 @@ setSalt(
     : "N/A"
 );
 
-console.log("STEP 4 - BEFORE GEMINI");
 
 console.log(
   "GENERATING AI FOR:",
@@ -110,7 +104,7 @@ const insight =
     String(n.salt_100g || "N/A")
   );
 
-  console.log("STEP 5 - AFTER GEMINI");
+  
 setAiInsight(insight);
 
 const concern =
@@ -130,9 +124,7 @@ setGoalAdvice(goal);
 setRecommendation(advice);
 setOverallVerdict(finalVerdict);    }
 
-console.log("STEP 6 - FINISHED");
   }   catch (error) {
-    console.log("LOAD ERROR:", error);
   }
 }
 
@@ -740,5 +732,11 @@ sectionRow: {
 
 sectionIcon: {
   marginRight: 10,
+},
+
+nutrientTitle: {
+  fontSize: 18,
+  fontWeight: "700",
+  color: Colors.forest,
 },
 });

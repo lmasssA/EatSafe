@@ -9,7 +9,7 @@ export async function saveCurrentProduct(product: any) {
       JSON.stringify(product)
     );
   } catch (error) {
-    console.log("Save Current Product Error:", error);
+    console.error("Save Current Product Error:", error);
   }
 }
 
@@ -23,7 +23,7 @@ export async function getCurrentProduct() {
 
     return JSON.parse(product);
   } catch (error) {
-    console.log("Get Current Product Error:", error);
+    console.error("Get Current Product Error:", error);
     return null;
   }
 }
@@ -34,6 +34,6 @@ export async function clearCurrentProduct() {
       CURRENT_PRODUCT_KEY
     );
   } catch (error) {
-    console.log("Clear Current Product Error:", error);
+    console.error("Clear Current Product Error:", error);
   }
 }

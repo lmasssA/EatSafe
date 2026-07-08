@@ -4,11 +4,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { getCurrentProduct } from "../../utils/currentProduct";
 export default function IngredientsScreen() {
@@ -82,21 +82,42 @@ ingredient.includes("cane sugar")
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingTop: 10 }}
       >
-        <TouchableOpacity
-  onPress={() => router.back()}
-  style={styles.backButton}
+        <Pressable
+  onPress={() =>
+  router.replace({
+    pathname: "/result",
+    params: {
+      barcode: String(barcode),
+    },
+  })
+}
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    marginTop: 30,
+    marginBottom: -80,
+  }}
 >
   <Ionicons
-    name="chevron-back"
+    name="arrow-back"
     size={24}
     color={Colors.forest}
   />
 
-  <Text style={styles.navText}>
+  <Text
+    style={{
+      fontSize: 18,
+      fontWeight: "600",
+      color: Colors.forest,
+      marginLeft: 6,
+    }}
+  >
     Results
   </Text>
-</TouchableOpacity>
+</Pressable>
 
         <Text style={styles.pageTitle}>
           Ingredients

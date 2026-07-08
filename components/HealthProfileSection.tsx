@@ -14,27 +14,27 @@ import {
 } from "react-native";
 
 const HEALTH_CONDITIONS = [
-  { emoji: "💉", name: "Diabetes" },
-  { emoji: "❤️", name: "Heart Disease" },
-  { emoji: "🩸", name: "High Blood Pressure" },
-  { emoji: "🧪", name: "High Cholesterol" },
-  { emoji: "🫘", name: "Kidney Disease" },
-  { emoji: "🤰", name: "Pregnancy" },
+  { icon: "water", color: "#4CAF50", name: "Diabetes" },
+  { icon: "heart", color: "#E53935", name: "Heart Disease" },
+  { icon: "pulse", color: "#D32F2F", name: "High Blood Pressure" },
+  { icon: "flask", color: "#43A047", name: "High Cholesterol" },
+  { icon: "medkit", color: "#8D6E63", name: "Kidney Disease" },
+  { icon: "woman", color: "#F48FB1", name: "Pregnancy" },
 ];
 
 const DIETARY_PREFERENCES = [
-  { emoji: "🥦", name: "Vegetarian" },
-  { emoji: "🌱", name: "Vegan" },
-  { emoji: "🥛", name: "Lactose Intolerant" },
-  { emoji: "🌾", name: "Gluten-Free" },
-  { emoji: "🥜", name: "Nut Allergy" },
+  { icon: "leaf", color: "#43A047", name: "Vegetarian" },
+  { icon: "flower-outline", color: "#66BB6A", name: "Vegan" },
+  { icon: "cafe", color: "#8D6E63", name: "Lactose Intolerant" },
+  { icon: "restaurant", color: "#F9A825", name: "Gluten-Free" },
+  { icon: "warning", color: "#FF9800", name: "Nut Allergy" },
 ];
 
 const HEALTH_GOALS = [
-  { emoji: "⚖️", name: "Lose Weight" },
-  { emoji: "💪", name: "Gain Muscle" },
-  { emoji: "🥗", name: "Eat Healthier" },
-  { emoji: "❤️", name: "Maintain Health" },
+  { icon: "barbell", color: "#607D8B", name: "Lose Weight" },
+  { icon: "fitness", color: "#43A047", name: "Gain Muscle" },
+  { icon: "restaurant", color: "#2E7D32", name: "Eat Healthier" },
+  { icon: "heart-circle", color: "#E53935", name: "Maintain Health" },
 ];
 
 export default function HealthProfileScreen() {
@@ -133,22 +133,37 @@ useEffect(() => {
         }
       }}
     >
-      <Text
-        style={[
-          styles.chipText,
-          isSelected && styles.selectedChipText,
-        ]}
-      >
-        {isSelected && (
+      <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
+>
+  {isSelected && (
+    <Ionicons
+      name="checkmark-circle"
+      size={20}
+      color="white"
+      style={{ marginRight: 8 }}
+    />
+  )}
+
   <Ionicons
-    name="checkmark-circle"
+    name={condition.icon as any}
     size={20}
-    color="white"
-    style={{ marginRight: 8 }}
+    color={isSelected ? "white" : condition.color}
+    style={{ marginRight: 10 }}
   />
-)}
-        {condition.name}
-      </Text>
+
+  <Text
+    style={[
+      styles.chipText,
+      isSelected && styles.selectedChipText,
+    ]}
+  >
+    {condition.name}
+  </Text>
+</View>
     </Pressable>
   );
 })}
@@ -185,23 +200,37 @@ useEffect(() => {
           }
         }}
       >
-        <Text
-          style={[
-            styles.chipText,
-            isSelected &&
-              styles.selectedChipText,
-          ]}
-        >
-          {isSelected && (
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
+>
+  {isSelected && (
+    <Ionicons
+      name="checkmark-circle"
+      size={20}
+      color="white"
+      style={{ marginRight: 8 }}
+    />
+  )}
+
   <Ionicons
-    name="checkmark-circle"
+    name={preference.icon as any}
     size={20}
-    color="white"
-    style={{ marginRight: 8 }}
+    color={isSelected ? "white" : preference.color}
+    style={{ marginRight: 10 }}
   />
-)}
-          {preference.name}
-        </Text>
+
+  <Text
+    style={[
+      styles.chipText,
+      isSelected && styles.selectedChipText,
+    ]}
+  >
+    {preference.name}
+  </Text>
+</View>
       </Pressable>
     );
   })}
@@ -227,23 +256,37 @@ useEffect(() => {
           setSelectedHealthGoal(goal.name)
         }
       >
-        <Text
-          style={[
-            styles.chipText,
-            isSelected &&
-              styles.selectedChipText,
-          ]}
-        >
-         {isSelected && (
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+  }}
+>
+  {isSelected && (
+    <Ionicons
+      name="checkmark-circle"
+      size={20}
+      color="white"
+      style={{ marginRight: 8 }}
+    />
+  )}
+
   <Ionicons
-    name="checkmark-circle"
+    name={goal.icon as any}
     size={20}
-    color="white"
-    style={{ marginRight: 8 }}
+    color={isSelected ? "white" : goal.color}
+    style={{ marginRight: 10 }}
   />
-)}
-          {goal.name}
-        </Text>
+
+  <Text
+    style={[
+      styles.chipText,
+      isSelected && styles.selectedChipText,
+    ]}
+  >
+    {goal.name}
+  </Text>
+</View>
       </Pressable>
     );
   })}

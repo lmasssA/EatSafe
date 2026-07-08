@@ -120,7 +120,6 @@ setFat(
       }
     
 } catch (error) {
-    console.log("LOAD PRODUCT ERROR:", error);
 
     await clearCurrentProduct();
 
@@ -415,65 +414,157 @@ if (!productFound) {
       borderRadius: 20,
     }}
   >
-    <Text
-      style={{
-        color: "#2E7D32",
-        fontWeight: "600",
-      }}
-    >
-      <Ionicons
-  name="checkmark-circle"
-  size={18}
-  color="#2E7D32"
-/>
-    </Text>
+   <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  }}
+>
+  <Ionicons
+    name="checkmark-circle"
+    size={18}
+    color="#2E7D32"
+  />
+  <Text
+    style={{
+      color: "#2E7D32",
+      fontWeight: "600",
+    }}
+  >
+    Low Fat
+  </Text>
+</View>
   </View>
 )}
 </View>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>
-          AI Summary
-        </Text>
+       <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  }}
+>
+  <Ionicons
+    name="sparkles"
+    size={24}
+    color={Colors.forest}
+    style={{ marginRight: 10,
+       marginBottom: 12
+      }}
+  />
+
+  <Text style={styles.cardTitle}>
+    AI Summary
+  </Text>
+</View>
 
         <Text style={styles.body}>
           {summary}
         </Text>
 
         <Pressable
-          style={styles.ingredientsButton}
-          onPress={() => {
-  console.log("OPENING INGREDIENTS WITH:", barcode);
+  style={styles.ingredientsButton}
+  onPress={() => {
+    console.log("OPENING INGREDIENTS WITH:", barcode);
 
-  router.push({
-    pathname: "/ingredients",
-    params: {
-      barcode: String(barcode),
-    },
-  });
-}}
-        >
-          <Text style={styles.buttonText}>
-            View Ingredients
-          </Text>
-        </Pressable>
+    router.push({
+      pathname: "/ingredients",
+      params: {
+        barcode: String(barcode),
+      },
+    });
+  }}
+>
+  <View
+    style={{
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    }}
+  >
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+    >
+      <Ionicons
+        name="list"
+        size={22}
+        color="white"
+      />
+
+      <Text
+        style={[
+          styles.buttonText,
+          { marginLeft: 10 },
+        ]}
+      >
+        View Ingredients
+      </Text>
+    </View>
+
+    <Ionicons
+      name="chevron-forward"
+      size={22}
+      color="white"
+    />
+  </View>
+</Pressable>
+
 
         <Pressable
-          style={styles.nutritionButton}
-          onPress={() => {
-  console.log("OPENING NUTRITION WITH:", barcode);
+  style={styles.nutritionButton}
+  onPress={() => {
+    console.log("OPENING NUTRITION WITH:", barcode);
 
-  router.push({
-    pathname: "/nutrition",
-    params: {
-      barcode: String(barcode),
-    },
-  });
-}}
-        >
-          <Text style={styles.buttonText}>
-            View Nutrition
-          </Text>
-        </Pressable>
+    router.push({
+      pathname: "/nutrition",
+      params: {
+        barcode: String(barcode),
+      },
+    });
+  }}
+>
+  <View
+    style={{
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    }}
+  >
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+    >
+      <Ionicons
+        name="nutrition"
+        size={22}
+        color="white"
+      />
+
+      <Text
+        style={[
+          styles.buttonText,
+          { marginLeft: 10 },
+        ]}
+      >
+        View Nutrition
+      </Text>
+    </View>
+
+    <Ionicons
+      name="chevron-forward"
+      size={22}
+      color="white"
+    />
+  </View>
+</Pressable>
+
       </View>
     </ScrollView>
 </>
@@ -586,7 +677,7 @@ card: {
   },
 
   ingredientsButton: {
-    backgroundColor: Colors.forest,
+    backgroundColor: Colors.sage,
     padding: 15,
     borderRadius: 12,
     marginTop: 20,

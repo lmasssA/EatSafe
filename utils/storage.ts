@@ -13,7 +13,7 @@ export async function saveScan(scan: any) {
       JSON.stringify(updated)
     );
   } catch (error) {
-    console.log("Save Scan Error:", error);
+   console.error("Save Scan Error:", error);
   }
 }
 
@@ -23,7 +23,7 @@ export async function getScanHistory() {
 
     return data ? JSON.parse(data) : [];
   } catch (error) {
-    console.log("Get History Error:", error);
+   console.error("Get History Error:", error);
     return [];
   }
 }
@@ -32,6 +32,6 @@ export async function clearHistory() {
   try {
     await AsyncStorage.removeItem(HISTORY_KEY);
   } catch (error) {
-    console.log("Clear History Error:", error);
+    console.error("Clear History Error:", error);
   }
 }

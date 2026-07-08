@@ -1,15 +1,15 @@
+import AppBackground from "@/components/AppBackground";
+import HealthProfileSection from "@/components/HealthProfileSection";
 import Colors from "@/constants/colors";
+import { getScanHistory } from "@/utils/storage";
+import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import { useEffect, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import AppBackground from "@/components/AppBackground";
-import HealthProfileSection from "@/components/HealthProfileSection";
-import { getScanHistory } from "@/utils/storage";
 
 export default function ProfileScreen() {
   const [totalScans, setTotalScans] = useState(0);
@@ -79,9 +79,24 @@ useEffect(() => {
 <View style={styles.statsRow}>
 
 <View style={styles.statCard}>
+<View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="scan"
+    size={18}
+    color={Colors.forest}
+    style={{ marginRight: 6 }}
+  />
+
   <Text style={styles.label}>
     Total Scans
   </Text>
+</View>
 
   <Text style={styles.value}>
     {totalScans}
@@ -89,9 +104,24 @@ useEffect(() => {
 </View>
 
 <View style={styles.statCard}>
+<View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="checkmark-circle"
+    size={18}
+    color="#2E7D32"
+    style={{ marginRight: 6 }}
+  />
+
   <Text style={styles.label}>
     Healthy Products
   </Text>
+</View>
 
   <Text style={styles.value}>
     {healthyProducts}
@@ -99,19 +129,57 @@ useEffect(() => {
 </View>
 
 <View style={styles.statCard}>
+  <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  }}
+>
+  <Ionicons
+    name="warning"
+    size={18}
+    color="#F9A825"
+    style={{ marginRight: 6 }}
+  />
+
   <Text style={styles.label}>
     Needs Improvement
   </Text>
+</View>
 
   <Text style={styles.value}>
     {unhealthyProducts}
   </Text>
 </View>
       <View style={styles.card}>
-        <Text style={styles.label}>
-          About
-        </Text>
+        <View
+  style={{
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  }}
+>
+  <Ionicons
+    name="information-circle"
+    size={24}
+    color={Colors.forest}
+    style={{
+      marginRight: 8,
+    }}
+  />
 
+  <Text
+    style={[
+      styles.label,
+      {
+        marginBottom: 0,
+      },
+    ]}
+  >
+    About
+  </Text>
+</View>
         <Text style={styles.about}>
           EatSafe helps users understand whether packaged food products are healthy by analyzing barcode and nutrition information.
         </Text>
@@ -183,5 +251,15 @@ statCard: {
   borderRadius: 22,
   padding: 18,
   marginBottom: 14,
-}, 
+  minHeight: 145,
+
+shadowColor: "#000",
+shadowOpacity: 0.08,
+shadowRadius: 8,
+shadowOffset: {
+  width: 0,
+  height: 3,
+},
+elevation: 3,
+},
 });

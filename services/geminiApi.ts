@@ -22,7 +22,6 @@ export async function testGemini() {
 
     return response.choices[0].message.content || "No response";
   } catch (error) {
-    console.log("AI ERROR:", error);
     return "Unable to generate insight.";
   }
 }
@@ -103,7 +102,7 @@ Limit Consumption
 Not Recommended
 `;
 
-    console.log("GENERATING INSIGHT...");
+   
 
     const response = await client.chat.completions.create({
       model: MODEL,
@@ -115,11 +114,10 @@ Not Recommended
       ],
     });
 
-    console.log("INSIGHT GENERATED");
 
     return response.choices[0].message.content || "Unable to generate insight.";
   } catch (error) {
-    console.log("AI ERROR:", error);
+    console.error("AI ERROR:", error);
     return "Unable to generate insight.";
   }
 }

@@ -23,7 +23,7 @@ export async function saveHealthProfile(
       JSON.stringify(profile)
     );
   } catch (error) {
-    console.log("Save Health Profile Error:", error);
+    console.error("Save Health Profile Error:", error);
   }
 }
 export async function getHealthProfile(): Promise<HealthProfile> {
@@ -51,7 +51,7 @@ export async function getHealthProfile(): Promise<HealthProfile> {
       ...parsed,
     };
   } catch (error) {
-    console.log("Get Health Profile Error:", error);
+    console.error("Get Health Profile Error:", error);
     return DEFAULT_PROFILE;
   }
 }
