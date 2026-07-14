@@ -8,7 +8,7 @@ const client = new OpenAI({
 
 const MODEL = "openrouter/auto";
 
-export async function testGemini() {
+export async function testOpenRouter() {
   try {
     const response = await client.chat.completions.create({
       model: MODEL,
